@@ -55,7 +55,7 @@ LSTM.compile(
 )
 LSTM.fit(X_train, y_train, epochs=50, batch_size=64, validation_data=(X_test, y_test))
 
-# Predict a new word
+# Predict a word from a made up sequence
 input_seq = "The yellow car is"
 input_tokens = tokenizer.texts_to_sequences([input_seq])[0]
 input = pad_sequences([input_tokens], maxlen=max_length - 1, padding="pre")
@@ -66,5 +66,28 @@ for word, index in tokenizer.word_index.items():
     if index == np.argmax(predicted[0]):
         predicted_word = word
         break
+print("Predicting a word based of a made up sequence.")
+print(f"The new input sequence is: {input_seq}")
+print(f"The predicted word is: {predicted_word}")
 
+
+# Predict a word from a test set sequence
+# Reversing a sequence from X_test didnt work for me
+
+f = open("sentences.txt", "r")
+input_seq = f.readline(50)
+f.close()
+
+input_tokens = tokenizer.texts_to_sequences([input_seq])[0]
+input = pad_sequences([input_tokens], maxlen=max_length - 1, padding="pre")
+
+predicted = LSTM.predict(input)
+predicted_word = ""
+for word, index in tokenizer.word_index.items():
+    if index == np.argmax(predicted[0]):
+        predicted_word = word
+        break
+
+print("Predicting a word based of a test set sequence.")
+print(f"The test set input sequence is: {input_seq}")
 print(f"The predicted word is: {predicted_word}")
