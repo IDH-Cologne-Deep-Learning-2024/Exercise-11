@@ -74,9 +74,9 @@ print(f"The predicted word is: {predicted_word}")
 # Predict a word from a test set sequence
 # Reversing a sequence from X_test didnt work for me
 
-f = open("sentences.txt", "r")
-input_seq = f.readline(50)
-f.close()
+file = open("sentences.txt", "r")
+input_seq = file.readline(50)
+file.close()
 
 input_tokens = tokenizer.texts_to_sequences([input_seq])[0]
 input = pad_sequences([input_tokens], maxlen=max_length - 1, padding="pre")
